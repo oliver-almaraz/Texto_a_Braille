@@ -139,12 +139,11 @@ int main(int argc, char *argv[]) {
     while ((letra = fgetc(source)) != EOF) {
 
         if (isalpha(letra)) { // Si es una letra (no diacríticos)
-            if (NUMERAL && islower(letra) && letra < 107) {
-                NUMERAL = 0;
+            if (NUMERAL && islower(letra) && letra < 107)
                 fwprintf(dest, L"%s", "⠐"); // Si hay números antes se separan las letras (a-j) con el punto 5.
-            }
+
             if (islower(letra)) { // Minúscula
-                NUMERAL = 0; //En el caso de que se escriban letras después de números sin espacios
+                NUMERAL = 0; // Las letras después de núms. desactivan el NUMERAL.
                 for (int i=0; i<26; i++) {
                     if (letra == minus[i]) {
                         fwprintf(dest, L"%s", minusBrai[i]);

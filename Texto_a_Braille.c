@@ -1,9 +1,15 @@
 /*******************************************
- * Este programa toma un documento de texto
+ *  Este programa toma un documento de texto
  * (.txt) como input y crea un nuevo doc.
  * con el texto convertido a los caracteres
  * Unicode correspondientes a la signografía
  * braille del español.
+ *  Por diferencias en codificación de texto
+ * solo funciona en sistemas basados en UNIX.
+ * Funcionará en Windows solo si Cygwin está
+ * instalado y añadido al path del sistema.
+ * (El binario ya compilado está en los relea-
+ * ses del repositorio en Github.com).
  * 
  * Creó: Oliver Daniel Almaraz Hernández
  * el 17-09-2020.
@@ -222,8 +228,6 @@ int main(int argc, char *argv[]) {
     printf("si quieres ayudar a mejorarla visita su repositorio:\n");
     printf("https://github.com/oliver-almaraz/Texto_a_Braille\n");
     printf("oliver.almaraz@gmail.com\n\n");
-    printf("(Presiona 'Enter' para salir)");
-    fgets(NULL,10,stdin);
     
     return 0;
 }

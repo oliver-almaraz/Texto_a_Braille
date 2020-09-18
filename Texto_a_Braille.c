@@ -11,6 +11,29 @@
  * 
  * Repositorio Github:
  * github.com/oliver-almaraz/Texto_a_Braille
+ * 
+ * 
+ *      EXPLICACIÓN DEL SISTEMA BRAILLE
+ * En el braille grado 1 (sin contracciones)
+ * casi siempre un signo corresponde a una
+ * letra del alfabeto español, pero hay excep-
+ * ciones:
+ *  - Las mayúsculas son los mismos signos que
+ * las minúsculas pero precedidas del signo de
+ * mayúscula (⠨).
+ *  - Los números 1-0 son los mísmos signos que
+ * las letras a-j, pero anteponiéndoles el
+ * signo numeral (⠼). Si se pone un signo
+ * numeral significa que todo lo que sigue será
+ * un número hasta que haya un espacio, una le-
+ * tra posterior a j, un signo de mayúscula o
+ * el punto 5 (⠐).
+ *  - Algunos signos de puntuación requieren
+ * dos signos braille.
+ * 
+ * SI NO PUEDES VISUALIZAR LOS SIGUIENTES
+ * SIGNOS DEBERÁS INSTALAR LAS FUENTES DE
+ * TIPOGRAFÍA BRAILLE [⠁⠃⠉⠙⠑]
 ********************************************/
 
 #include <stdio.h>
@@ -44,13 +67,22 @@ const char *diacriticosBrai[14] = {
 const char nums[10] = {
     '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
 };
-const char punct[11] = {
+const char punct[26] = {
     '.', ',', ';', ':', '-',
-    '?', '!', '"', '(', ')', '*'
+    '?', '!', '"', '(', ')', '*',
+
+    '$','%', '=', '+', '#',
+    '|', '\'', '/', '\\', '{', '}',
+    '[', ']', '@', '&'
+
 };
-const char *punctBrai[11] = {
+const char *punctBrai[26] = {
     "⠄", "⠂", "⠆", "⠒", "⠤",
-    "⠢", "⠖", "⠦", "⠣", "⠜", "⠔"
+    "⠢", "⠖", "⠦", "⠣", "⠜", "⠔",
+
+    "⠸⠜", "⠸⠴", "⠶", "⠖", "⠼⠐",
+    "⠸", "⠄", "⠠⠂", "⠐⠄", "⠐⠸", "⠸⠂",
+    "⠷", "⠾", "⠐", "⠠⠯"
 };
 const int punctEsp[2] = {
     // ¿ , ¡
@@ -98,6 +130,10 @@ int main(int argc, char *argv[]) {
     while ((letra = fgetc(source)) != EOF) {
 
         if (isalpha(letra)) { // Si es una letra (no diacríticos)
+            if (NUMERAL && islower(letra) && letra < 107) {
+                fwprintf(dest, L"%s", "⠐"); // Si hay números antes se separan las letras (a-j) con el punto 5.
+                NUMERAL = 0;
+            }
             if (islower(letra)) { // Minúscula
                 for (int i=0; i<26; i++) {
                     if (letra == minus[i]) {
@@ -133,7 +169,7 @@ int main(int argc, char *argv[]) {
                 }
             }
         } else if (ispunct(letra)) { // Signo de puntuación simple ( ? ! etc.)
-            for (int i=0; i<11; i++) {
+            for (int i=0; i<26; i++) {
                 if (letra == punct[i]) {
                     fwprintf(dest, L"%s", punctBrai[i]);
                 }

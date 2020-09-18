@@ -140,16 +140,18 @@ int main(int argc, char *argv[]) {
 
         if (isalpha(letra)) { // Si es una letra (no diacríticos)
             if (NUMERAL && islower(letra) && letra < 107) {
-                fwprintf(dest, L"%s", "⠐"); // Si hay números antes se separan las letras (a-j) con el punto 5.
                 NUMERAL = 0;
+                fwprintf(dest, L"%s", "⠐"); // Si hay números antes se separan las letras (a-j) con el punto 5.
             }
             if (islower(letra)) { // Minúscula
+                NUMERAL = 0; //En el caso de que se escriban letras después de números sin espacios
                 for (int i=0; i<26; i++) {
                     if (letra == minus[i]) {
                         fwprintf(dest, L"%s", minusBrai[i]);
                     }
                 }
             } else if (isupper(letra)) { // Mayúscula
+                NUMERAL = 0;
                 for (int i=0; i<26; i++) {
                     if (tolower(letra) == minus[i]) {
                         // Signo de mayúscula + letra
@@ -194,6 +196,7 @@ int main(int argc, char *argv[]) {
             }
         } else if (letra == 195) { // Flag para letra con signo diacrítico
             DIACRITICO = 1;
+            NUMERAL = 0;
         } else if (DIACRITICO) {
             DIACRITICO = 0; // Flag solo dura una vuelta
             if (letra > 160 && letra < 188) { // Si es letra con signo diacrítico minúscula

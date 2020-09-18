@@ -95,7 +95,7 @@ const char *punctEspBrai[2] = {
 
 int main(int argc, char *argv[]) {
     
-    setlocale(LC_CTYPE, ""); // Para poder visualizar unicode correctamente en la terminal.
+    setlocale(LC_ALL, "es_MX.UTF-8");
     
     char origen[200]; // Nombre del doc. de texto a convertir.
     if (argc == 2) {

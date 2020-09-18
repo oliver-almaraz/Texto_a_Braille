@@ -42,6 +42,8 @@
 #include <locale.h>
 #include <stdlib.h>
 
+setlocale(LC_CTYPE, ""); // Para poder visualizar unicode correctamente en la terminal.
+
 const char minus[26] = {
     'a','b','c','d','e','f','g','h','i','j',
     'k','l','m','n','o','p','q','r','s','t',
@@ -104,35 +106,35 @@ int main(int argc, char *argv[]) {
         origen[strcspn(origen, "\n")] = 0; // se elimina el \n al final
     }
     printf("\nAbriendo '%s'...\n", origen);
-
+    
+    FILE *source = fopen(origen, "r, ccs=UTF-8"); // Documento origen en modo de solo lectura (UTF-8)
+    if (source == NULL) {
+        printf("No se pudo abrir el archivo.\n¿Existe? ¿De casualidad está en uso por otra aplicación?\n");
+        printf("(Presiona 'Enter' para salir)");
+        fgets(NULL,10,stdin);
+        exit(1);
+    }
+    
     char destino[50]; // Se crea el nombre del archivo output.
     strcpy(destino, origen);
     for (int i=0; i<4; i++) { // se le quita la extensión (.txt)
         destino[strlen(destino)-1] = '\0';
     }
-    strcat(destino, "(braille).txt"); // y se le aguega texto para identificarlo + extención.
+    strcat(destino, "(braille).txt"); // y se le agrega texto para identificarlo + extención.
     printf("\nDocumento destino (en el mismo directorio que el documento origen):\n'%s'\n",destino);
-
-
-    setlocale(LC_CTYPE, ""); // Para poder visualizar unicode correctamente en la terminal.
-    FILE *source = fopen(origen, "r, ccs=UTF-8"); // Documento origen en modo de solo lectura (UTF-8)
-    FILE *dest = fopen(destino, "w, ccs=UTF-8"); // Doc. destino en modo de escritura.
-    unsigned int letra;
-    _Bool NUMERAL = 0; // Flags
-    _Bool DIACRITICO = 0;
-    _Bool PUNCT_ESP = 0;
     
-    if (source == NULL) {
-        printf("No se pudo abrir el archivo.\n¿De casualidad está en uso por otra aplicación?\n");
-        printf("(Presiona 'Enter' para salir)");
-        fgets(NULL,10,stdin);
-        exit(1);
-    } else if (dest == NULL) {
+    FILE *dest = fopen(destino, "w, ccs=UTF-8"); // Doc. destino en modo de escritura.
+    if (dest == NULL) {
         printf("No se pudo crear el archivo destino.\n¿Tengo permiso para acceder al directorio?\n");
         printf("(Presiona 'Enter' para salir)");
         fgets(NULL,10,stdin);
         exit(1);
     }
+    
+    unsigned int letra;
+    _Bool NUMERAL = 0; // Flags
+    _Bool DIACRITICO = 0;
+    _Bool PUNCT_ESP = 0;
     
     while ((letra = fgetc(source)) != EOF) {
 

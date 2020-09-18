@@ -9,4 +9,4 @@ EL binario ya está compilado (ver [lanzamientos](https://github.com/oliver-alma
 instalar Cygwin y [añadirlo al path](https://www.maketecheasier.com/install-configure-cygwin-windows/) del sistema.
 
 # Captura de pantalla:
-<img src="https://user-images.githubusercontent.com/69062188/93650814-21e18700-f9d5-11ea-9a68-7c2517bc3c3d.png" width="90%"></img> 
+<img src="https://user-images.githubusercontent.com/69062188/93651537-679f4f00-f9d7-11ea-943e-e2683432c44d.png" width="90%"></img> 

@@ -117,13 +117,20 @@ int main(int argc, char *argv[]) {
     setlocale(LC_CTYPE, ""); // Para poder visualizar unicode correctamente en la terminal.
     FILE *source = fopen(origen, "r, ccs=UTF-8"); // Documento origen en modo de solo lectura (UTF-8)
     FILE *dest = fopen(destino, "w, ccs=UTF-8"); // Doc. destino en modo de escritura.
-    wchar_t letra;
+    unsigned int letra;
     _Bool NUMERAL = 0; // Flags
     _Bool DIACRITICO = 0;
     _Bool PUNCT_ESP = 0;
     
     if (source == NULL) {
         printf("No se pudo abrir el archivo.\n¿De casualidad está en uso por otra aplicación?\n");
+        printf("(Presiona 'Enter' para salir)");
+        fgets(NULL,10,stdin);
+        exit(1);
+    } else if (dest == NULL) {
+        printf("No se pudo crear el archivo destino.\n¿Tengo permiso para acceder al directorio?\n");
+        printf("(Presiona 'Enter' para salir)");
+        fgets(NULL,10,stdin);
         exit(1);
     }
     
@@ -206,5 +213,13 @@ int main(int argc, char *argv[]) {
     printf("\n¡Conversión terminada con éxito!\n");
     fclose(source);
     fclose(dest);
+    
+    printf("Esta es una aplicación gratuita y de código abierto,\n");
+    printf("si quieres ayudar a mejorarla visita su repositorio:\n");
+    printf("https://github.com/oliver-almaraz/Texto_a_Braille\n");
+    printf("oliver.almaraz@gmail.com\n\n");
+    printf("(Presiona 'Enter' para salir)");
+    fgets(NULL,10,stdin);
+    
     return 0;
 }

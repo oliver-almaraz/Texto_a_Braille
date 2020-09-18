@@ -42,8 +42,6 @@
 #include <locale.h>
 #include <stdlib.h>
 
-setlocale(LC_CTYPE, ""); // Para poder visualizar unicode correctamente en la terminal.
-
 const char minus[26] = {
     'a','b','c','d','e','f','g','h','i','j',
     'k','l','m','n','o','p','q','r','s','t',
@@ -96,6 +94,8 @@ const char *punctEspBrai[2] = {
 };
 
 int main(int argc, char *argv[]) {
+    
+    setlocale(LC_CTYPE, ""); // Para poder visualizar unicode correctamente en la terminal.
     
     char origen[200]; // Nombre del doc. de texto a convertir.
     if (argc == 2) {

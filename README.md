@@ -1,7 +1,7 @@
 # Texto a Braille
 Transforma cualquier documento de texto (.txt UTF-8) en español a texto en braille (Unicode).
 
-## ¡Ya es compatible también con Windows!
+## ¡Ya es compatible con Windows!
 Descarga los ejecutables desde la sección de [lanzamientos](https://github.com/oliver-almaraz/Texto_a_Braille/releases).
 
 # Capturas de pantalla:

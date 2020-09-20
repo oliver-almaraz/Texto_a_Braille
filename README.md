@@ -10,7 +10,7 @@ Descarga los ejecutables desde la sección de [lanzamientos](https://github.com/
   están aprendiendo braille y buscan ganar soltura al leer en dicho sistema y no tienen acceso a lectores electrónicos de
   braille o a una impresora braille. Puedes transcribir el Quijote en menos de un segundo para leerlo en tu tiempo libre
   ¿cuánto te llevaría transcribirlo con regleta y punzón o cuánto te costaría imprimirlo en braille?
-- **La transcripción que realiza este programa es 100 % confiable?**
+- **¿La transcripción que realiza este programa es 100 % confiable?**
   - Obviamente no. En muchos casos se requiere de un criterio humano para realizar la mejor transcripción y para respetar las
   convenciones de transcripción.
 - **¿Puede transcribir texto de otros idiomas?**

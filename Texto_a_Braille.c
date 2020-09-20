@@ -107,9 +107,9 @@ int main(int argc, char *argv[]) {
     //WIN// SetConsoleOutputCP(65001);
 
     printf("\n\"Texto a Braille\"\n");
-    printf("Traductor de documentos de texto (.txt) a braille español (unicode)\n\n");
+    printf("Traductor de documentos de texto (.txt) a braille español (Unicode)\n\n");
 
-    char origen[200]; // Nombre del doc. de texto a convertir.
+    char origen[250]; // Nombre del doc. de texto a convertir.
     if (argc == 2) {
         strncpy(origen, argv[1], 200);
     } else {
@@ -126,7 +126,7 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
     
-    char destino[50]; // Se crea el nombre del archivo output.
+    char destino[250]; // Se crea el nombre del archivo output.
     strcpy(destino, origen);
     for (int i=0; i<4; i++) { // se le quita la extensión (.txt)
         destino[strlen(destino)-1] = '\0';
@@ -209,13 +209,13 @@ int main(int argc, char *argv[]) {
             NUMERAL = 0;
         } else if (DIACRITICO) {
             DIACRITICO = 0; // Flag solo dura una vuelta
-            if (letra > 160 && letra < 188) { // Si es letra con signo diacrítico minúscula
+            if (letra > 160 && letra < 189) { // Si es letra con signo diacrítico minúscula
                 for (int i=0; i<7; i++) {
                     if (letra == diacriticos[i]) {
                         fprintf(dest, "%s", diacriticosBrai[i]);
                     }
                 }
-            } else if (letra > 128 && letra < 161) { // Si es letra con sig. diac. mayus.
+            } else if (letra > 128 && letra < 157) { // Si es letra con sig. diac. mayus.
                 for (int i=7; i<14; i++) {
                     if (letra == diacriticos[i]) {
                         fprintf(dest, "%s%s", "⠨", diacriticosBrai[i - 7]);

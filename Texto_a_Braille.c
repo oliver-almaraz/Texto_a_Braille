@@ -62,15 +62,15 @@ const char *minusBrai[26] = {
     "⠥","⠧","⠭","⠽","⠵","⠺"
 };
 const int diacriticos[14] = {
-    // á , é , í , ó , ú , ü , ñ (161 - 188)
+  // á ,  é ,  í ,  ó ,  ú ,  ü ,  ñ (161 - 188)
     161, 169, 173, 179, 186, 188, 177,
-    // Á , É , Í , Ó , Ú , Ü , Ñ (129 - 156)
+  // Á ,  É ,  Í ,  Ó ,  Ú ,  Ü ,  Ñ (129 - 156)
     129, 137, 141, 147, 154, 156, 145
 };
 const char *diacriticosBrai[14] = {
-    // á , é , í , ó , ú , ü , ñ
+  // á ,  é , í , ó , ú , ü , ñ
     "⠷","⠮","⠌","⠬","⠾","⠳","⠻",
-    // Á , É , Í , Ó , Ú , Ü , Ñ
+  // Á ,  É , Í , Ó , Ú , Ü , Ñ
     "⠷","⠮","⠌","⠬","⠾","⠳","⠻"
 };
 const char nums[10] = {
@@ -94,32 +94,32 @@ const char *punctBrai[26] = {
     "⠷", "⠾", "⠐", "⠠⠯"
 };
 const int punctEsp[2] = {
-    // ¿ , ¡
+  // ¿ ,  ¡
     191, 161
 };
 const char *punctEspBrai[2] = {
-    // ¿ , ¡
+  // ¿ ,  ¡
     "⠢", "⠖"
 };
 
 int main(int argc, char *argv[]) {
 
-    //WIN// SetConsoleOutputCP(65001);
+    //WIN// SetConsoleOutputCP(65001); // Unreliable, works using mingw64-i686-gcc-core (x86, 7.4.0-1) though.
 
     printf("\n\"Texto a Braille\"\n");
     printf("Traductor de documentos de texto (.txt) a braille español (Unicode)\n\n");
 
     char origen[250]; // Nombre del doc. de texto a convertir.
     if (argc == 2) {
-        strncpy(origen, argv[1], 200);
+        strncpy(origen, argv[1], 250);
     } else {
         printf("Arrastra a esta ventana el archivo de texto (.txt) a convertir o escribe su ruta:\n");
-        fgets(origen, 200, stdin);
+        fgets(origen, 250, stdin);
         origen[strcspn(origen, "\n")] = 0; // se elimina el \n al final
     }
     printf("Abriendo '%s'...\n", origen);
     
-    FILE *source = fopen(origen, "r"); // Documento origen en modo de solo lectura (UTF-8)
+    FILE *source = fopen(origen, "r"); // Documento origen en modo de solo lectura
     if (source == NULL) {
         printf("No se pudo abrir el archivo.\n¿Existe? ¿De casualidad está en uso por otra aplicación?\n");
         //WIN// system("pause");
@@ -142,7 +142,7 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
     
-    int letra;
+    int letra; // Almacena el char que será leído por fgetc()
     _Bool NUMERAL = 0; // Flags
     _Bool DIACRITICO = 0;
     _Bool PUNCT_ESP = 0;

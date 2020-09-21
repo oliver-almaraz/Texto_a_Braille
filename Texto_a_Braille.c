@@ -172,7 +172,7 @@ int main(int argc, char *argv[]) {
         }
           else if (isspace(letra)) { // Si es espacio, Tab, \n
             NUMERAL = 0;
-            if (letra == ' ') // El espacio también es especial
+            if (letra == ' ') // El espacio braille también es especial
                 fprintf(dest, "%s", "⠀");
             else
                 fprintf(dest, "%c", letra);
@@ -197,6 +197,7 @@ int main(int argc, char *argv[]) {
             }
         } else if (letra == 194) { // Para '¿' y '¡' fgetc() interpreta dos caracteres (int), el primero siempre es 194
             PUNCT_ESP = 1; // FLAG para s. de puntuación especial ( ¿ ¡ )
+            // '¿' y '¡' no desactivan NUMERAL. Es más probable encontrar 123¿45¡6 que 123¿abc? (incorrecto)
         } else if (PUNCT_ESP) {
             PUNCT_ESP = 0; //FLAG solo dura activa una vuelta
             for (int i=0; i<2; i++) {

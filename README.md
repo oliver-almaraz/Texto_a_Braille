@@ -1,5 +1,5 @@
 # Texto a Braille
-Transforma cualquier documento de texto (.txt UTF-8) en español a texto en braille (Unicode).
+Transforma cualquier documento de texto (*.txt UTF-8) en español a texto en braille (Unicode).
 
 ## ¡Ya es compatible con Windows!
 Descarga los ejecutables desde la sección de [lanzamientos](https://github.com/oliver-almaraz/Texto_a_Braille/releases).
@@ -8,7 +8,7 @@ Descarga los ejecutables desde la sección de [lanzamientos](https://github.com/
 
 ## Preguntas frecuentes
 - **¿A quiénes está dirigido este programa?**
-  - Aunque parezca contradictorio, este *traductor* a braille está dirigido a **usuarios videntes**, principalmente a quienes
+  - Este *traductor* a braille está dirigido a **usuarios videntes**, principalmente a quienes
   están aprendiendo braille y buscan ganar soltura al leer en dicho sistema y no tienen acceso a lectores electrónicos de
   braille o a una impresora braille. Puedes transcribir el Quijote en menos de un segundo para leerlo en tu tiempo libre
   ¿cuánto te llevaría transcribirlo con regleta y punzón o cuánto te costaría imprimirlo en braille?

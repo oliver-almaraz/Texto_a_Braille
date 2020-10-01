@@ -4,6 +4,9 @@ Transforma cualquier documento de texto (.txt UTF-8) en español a texto en brai
 ## ¡Ya es compatible con Windows!
 Descarga los ejecutables desde la sección de [lanzamientos](https://github.com/oliver-almaraz/Texto_a_Braille/releases).
 
+## Ve cómo funciona:
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Vs8UN4bHaxo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Preguntas frecuentes
 - **¿A quiénes está dirigido este programa?**
   - Aunque parezca contradictorio, este *traductor* a braille está dirigido a **usuarios videntes**, principalmente a quienes

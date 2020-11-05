@@ -110,7 +110,7 @@ const char *punctEspBrai[2] = {
 
 int main(int argc, char *argv[]) {
 
-    #ifdef WINDOWS
+	#ifdef WINDOWS
 		SetConsoleOutputCP(65001); // Unreliable(?), works using mingw64-i686-gcc-core (x86, 7.4.0-1) though.
 	#endif
 
@@ -130,7 +130,9 @@ int main(int argc, char *argv[]) {
     FILE *source = fopen(origen, "r"); // Documento origen en modo de solo lectura
     if (source == NULL) {
         printf("No se pudo abrir el archivo.\n¿Existe? ¿De casualidad está en uso por otra aplicación?\n");
-        //WIN// system("pause");
+		#ifdef WINDOWS
+        	system("pause");
+		#endif
         exit(1);
     }
     
@@ -146,7 +148,9 @@ int main(int argc, char *argv[]) {
     if (dest == NULL) {
         printf("No se pudo crear el documento destino.");
         printf("¿Hay un documento con el mismo nombre abierto por otra aplicación?");
-        //WIN// system("pause");
+		#ifdef WINDOWS
+        	system("pause");
+		#endif
         exit(1);
     }
     

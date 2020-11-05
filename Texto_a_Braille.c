@@ -7,10 +7,12 @@
  * 
  *      COMPILAR PARA WINDOWS
  *  Antes de compilar para Windows DESCOMENTA
- * las partes del código que se introducen con:
- *      //WIN//
- * Incluí el ícono ya compilado: "icono.o", pue-
- * des incluirlo al momento de enlazar (link).
+ * la línea:
+ *		#define WINDOWS
+ * o compila pasando como argumento dicha defi-
+ * nición:
+ *	gcc Texto_a_Braille.c icono.o -D WINDOWS
+ * Incluí el ícono ya compilado: "icono.o".
  * (El '.exe' ya compilado está en los releases
  * del repositorio en Github.com).
  * 
@@ -35,8 +37,8 @@
  * signo numeral (⠼). Si se pone un signo
  * numeral significa que todo lo que sigue será
  * un número hasta que haya un espacio, una le-
- * tra posterior a j, un signo de mayúscula o
- * el punto 5 (⠐).
+ * tra posterior a j, un signo de mayúscula, un
+ * signo de puntuación o el punto 5 (⠐).
  *  - Algunos signos de puntuación requieren
  * dos signos braille.
  * 
@@ -49,7 +51,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-//WIN// #include <windows.h>
+
+//#define WINDOWS
+#ifdef WINDOWS
+	#include <windows.h>
+#endif
 
 const char minus[26] = {
     'a','b','c','d','e','f','g','h','i','j',
@@ -104,7 +110,9 @@ const char *punctEspBrai[2] = {
 
 int main(int argc, char *argv[]) {
 
-    //WIN// SetConsoleOutputCP(65001); // Unreliable, works using mingw64-i686-gcc-core (x86, 7.4.0-1) though.
+    #ifdef WINDOWS
+		SetConsoleOutputCP(65001); // Unreliable(?), works using mingw64-i686-gcc-core (x86, 7.4.0-1) though.
+	#endif
 
     printf("\n\"Texto a Braille\"\n");
     printf("Traductor de documentos de texto (.txt) a braille español (Unicode)\n\n");
@@ -151,7 +159,8 @@ int main(int argc, char *argv[]) {
 
         if (isalpha(letra)) { // Si es una letra (no diacríticos)
             if (NUMERAL && islower(letra) && letra < 107)
-                fprintf(dest, "%s", "⠐"); // Si hay números antes se separan las letras (a-j) con el punto 5.
+                fprintf(dest, "%s", "⠐");
+				// Si hay números antes se separan las letras (a-j) con el punto 5.
 
             if (islower(letra)) { // Minúscula
                 NUMERAL = 0; // Las letras después de núms. desactivan el NUMERAL.
@@ -187,15 +196,19 @@ int main(int argc, char *argv[]) {
                     } else {
                         fprintf(dest, "%s", minusBrai[i]);
                     }
+				break;
                 }
             }
-        } else if (ispunct(letra)) { // Signo de puntuación simple ( ? ! etc.)
-            for (int i=0; i<26; i++) {
+        }
+		 else if (ispunct(letra)) { // Signo de puntuación simple ( ? ! etc.)
+            NUMERAL = 0;
+			for (int i=0; i<26; i++) {
                 if (letra == punct[i]) {
                     fprintf(dest, "%s", punctBrai[i]);
                 }
             }
-        } else if (letra == 194) { // Para '¿' y '¡' fgetc() interpreta dos caracteres (int), el primero siempre es 194
+        } else if (letra == 194) {
+		// Para '¿' y '¡' fgetc() interpreta dos caracteres (int), el primero siempre es 194
             PUNCT_ESP = 1; // FLAG para s. de puntuación especial ( ¿ ¡ )
             // '¿' y '¡' no desactivan NUMERAL. Es más probable encontrar 123¿45¡6 que 123¿abc? (incorrecto)
         } else if (PUNCT_ESP) {
@@ -205,7 +218,8 @@ int main(int argc, char *argv[]) {
                     fprintf(dest, "%s", punctEspBrai[i]);
                 }
             }
-        } else if (letra == 195) { // Para [áÁ-úÚ,üÜ,ñÑ] fgetc() interpreta dos caracteres (int), el primero siempre es 195
+        } else if (letra == 195) {
+		// Para [áÁ-úÚ,üÜ,ñÑ] fgetc() interpreta dos caracteres (int), el primero siempre es 195
             DIACRITICO = 1; // Flag para letra con signo diacrítico
             NUMERAL = 0;
         } else if (DIACRITICO) {
@@ -235,7 +249,9 @@ int main(int argc, char *argv[]) {
     printf("https://github.com/oliver-almaraz/Texto_a_Braille\n");
     printf("oliver.almaraz@gmail.com\n\n");
     
-    //WIN// system("pause");
+    #ifdef WINDOWS
+		system("pause");
+	#endif
 
     return 0;
 }

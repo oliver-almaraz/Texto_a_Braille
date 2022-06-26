@@ -67,7 +67,7 @@
 
 //#define WINDOWS
 #ifdef WINDOWS
-	#include <windows.h>
+    #include <windows.h>
 #endif
 
 
@@ -133,9 +133,9 @@ const char *punctEspBrai[2] = {
 
 int main(int argc, char *argv[]) {
 
-	#ifdef WINDOWS
-		SetConsoleOutputCP(65001); // Unreliable(?), works using mingw64-i686-gcc-core (x86, 7.4.0-1) though.
-	#endif
+    #ifdef WINDOWS
+        SetConsoleOutputCP(65001); // Unreliable(?), works using mingw64-i686-gcc-core (x86, 7.4.0-1) though.
+    #endif
 
     printf("\n\"Texto a Braille\"\n");
     printf("Traductor de documentos de texto (.txt) a braille español (Unicode)\n\n");
@@ -144,22 +144,22 @@ int main(int argc, char *argv[]) {
 *            Abrir documento origen
 *****************************************************/
 
-	char origen[250]; // Nombre del doc. de texto a convertir.
-	if (argc == 2) {
-		strncpy(origen, argv[1], 250);
-	} else {
-		printf("Arrastra a esta ventana el archivo de texto (.txt) a convertir o escribe su ruta:\n");
-		fgets(origen, 250, stdin);
-		origen[strcspn(origen, "\n")] = 0; // se elimina el \n al final
-	}
-	printf("Abriendo '%s'...\n", origen);
+    char origen[250]; // Nombre del doc. de texto a convertir.
+    if (argc == 2) {
+        strncpy(origen, argv[1], 250);
+    } else {
+        printf("Arrastra a esta ventana el archivo de texto (.txt) a convertir o escribe su ruta:\n");
+        fgets(origen, 250, stdin);
+        origen[strcspn(origen, "\n")] = 0; // se elimina el \n al final
+    }
+    printf("Abriendo '%s'...\n", origen);
 
-	FILE *source = fopen(origen, "r"); // Documento origen en modo de solo lectura
+    FILE *source = fopen(origen, "r"); // Documento origen en modo de solo lectura
     if (source == NULL) {
         printf("No se pudo abrir el archivo.\n¿Existe? ¿De casualidad está en uso por otra aplicación?\n");
-		#ifdef WINDOWS
-			system("pause");
-		#endif
+        #ifdef WINDOWS
+            system("pause");
+        #endif
         exit(1);
     }
 
@@ -179,9 +179,9 @@ int main(int argc, char *argv[]) {
     if (dest == NULL) {
         printf("No se pudo crear el documento destino.");
         printf("¿Hay un documento con el mismo nombre abierto por otra aplicación?");
-		#ifdef WINDOWS
-			system("pause");
-		#endif
+        #ifdef WINDOWS
+            system("pause");
+        #endif
         exit(1);
     }
 
@@ -191,8 +191,8 @@ int main(int argc, char *argv[]) {
 
     int letra; // Almacena el char que será leído por fgetc()
 
-	// Flags
-	_Bool NUMERAL = 0;
+    // Flags
+    _Bool NUMERAL = 0;
     _Bool DIACRITICO = 0; // Para ¿ ¡
     _Bool PUNCT_ESP = 0; // Para áÁ-úÚ,üÜ,ñÑ
 
@@ -215,14 +215,14 @@ int main(int argc, char *argv[]) {
         if (isalpha(letra)) {
             if (NUMERAL && islower(letra) && letra < 107)
                 fprintf(dest, "%s", "⠐");
-				// Si hay números antes se separan las letras (a-j) con el punto 5.
+                // Si hay números antes se separan las letras (a-j) con el punto 5.
 
             if (islower(letra)) { // Minúscula
                 NUMERAL = 0; // Las letras después de núms. desactivan el NUMERAL.
                 for (int i=0; i<26; i++) {
                     if (letra == minus[i]) {
                         fprintf(dest, "%s", minusBrai[i]);
-						break;
+                        break;
                     }
                 }
             } else if (isupper(letra)) { // Mayúscula
@@ -231,7 +231,7 @@ int main(int argc, char *argv[]) {
                     if (tolower(letra) == minus[i]) {
                         // Signo de mayúscula + letra
                         fprintf(dest, "%s%s", "⠨", minusBrai[i]);
-						break;
+                        break;
                     }
                 }
             }
@@ -245,12 +245,12 @@ int main(int argc, char *argv[]) {
             NUMERAL = 0;
             if (letra == ' '){ // El espacio braille también es especial
                 fprintf(dest, "%s", "⠀");
-				continue;
-			}
+                continue;
+            }
             else {
                 fprintf(dest, "%c", letra);
-				continue;
-			}
+                continue;
+            }
         }
           else if (isdigit(letra)) { //Si es un número
             for (int i=0; i<10; i++) {
@@ -262,7 +262,7 @@ int main(int argc, char *argv[]) {
                     } else {
                         fprintf(dest, "%s", minusBrai[i]);
                     }
-				break;
+                break;
                 }
             }
         }
@@ -271,48 +271,48 @@ int main(int argc, char *argv[]) {
 *           Es un signo de puntuación
 *****************************************************/
 
-		else if (ispunct(letra)) { // Signo de puntuación simple ( ? ! etc.)
+        else if (ispunct(letra)) { // Signo de puntuación simple ( ? ! etc.)
             // El punto separador decimal se escribe en braille con el punto 2.
-			// En español de España, donde se usa la coma como separador decimal,
-			// el programa requerirá cambios
-			if (NUMERAL && letra == '.'){
-				fprintf(dest, "%s", "⠂");
-				continue;
-			}
-			else if (NUMERAL && letra == ','){
-				// Si es una coma como separador de grupos
-				// de tres dígitos, en braille se usa el punto 3
-				fprintf(dest, "%s", "⠄");
-				continue;
-			}
-			else
-				NUMERAL = 0;
-				for (int i=0; i<26; i++) {
-					if (letra == punct[i]) {
-						fprintf(dest, "%s", punctBrai[i]);
-						break;
-        	        }
-        	    }
-		}
+            // En español de España, donde se usa la coma como separador decimal,
+            // el programa requerirá cambios
+            if (NUMERAL && letra == '.'){
+                fprintf(dest, "%s", "⠂");
+                continue;
+            }
+            else if (NUMERAL && letra == ','){
+                // Si es una coma como separador de grupos
+                // de tres dígitos, en braille se usa el punto 3
+                fprintf(dest, "%s", "⠄");
+                continue;
+            }
+            else
+                NUMERAL = 0;
+                for (int i=0; i<26; i++) {
+                    if (letra == punct[i]) {
+                        fprintf(dest, "%s", punctBrai[i]);
+                        break;
+                    }
+                }
+        }
 
 /*****************************************************
 *       Signos de 16 bits:  ¿ ¡ á Á ú Ú ü Ü ñ Ñ
 *****************************************************/
 
-		else if (letra == 194) {
-		// Para '¿' y '¡' fgetc() interpreta dos caracteres (int), el primero siempre es 194
+        else if (letra == 194) {
+        // Para '¿' y '¡' fgetc() interpreta dos caracteres (int), el primero siempre es 194
             PUNCT_ESP = 1; // Esta vuelta solo activa el FLAG, la próxima se descifra el signo
-			NUMERAL = 0;
+            NUMERAL = 0;
         } else if (PUNCT_ESP) {
             PUNCT_ESP = 0; //FLAG solo dura activa una vuelta
             for (int i=0; i<2; i++) {
                 if (letra == punctEsp[i]) {
                     fprintf(dest, "%s", punctEspBrai[i]);
-					break;
+                    break;
                 }
             }
         } else if (letra == 195) {
-		// Para [áÁ-úÚ,üÜ,ñÑ] fgetc() interpreta dos caracteres (int), el primero siempre es 195
+        // Para [áÁ-úÚ,üÜ,ñÑ] fgetc() interpreta dos caracteres (int), el primero siempre es 195
             DIACRITICO = 1; // Esta vuelta solo activa el FLAG, la próxima se descifra el signo
             NUMERAL = 0;
         } else if (DIACRITICO) {
@@ -321,7 +321,7 @@ int main(int argc, char *argv[]) {
                 for (int i=0; i<7; i++) {
                     if (letra == diacriticos[i]) {
                         fprintf(dest, "%s", diacriticosBrai[i]);
-						break;
+                        break;
                     }
                 }
             } else if (letra > 128 && letra < 157) { // Si es letra con sig. diac. mayus.
@@ -343,13 +343,13 @@ int main(int argc, char *argv[]) {
     fclose(dest);
 
     printf(
-		"Esta es una aplicación gratuita y de código abierto,\n"
-		"si quieres ayudar a mejorarla visita su repositorio:\n"
-		"https://github.com/oliver-almaraz/Texto_a_Braille\n"
-		"oliver.almaraz@gmail.com\n\n"
-	);
+        "Esta es una aplicación gratuita y de código abierto,\n"
+        "si quieres ayudar a mejorarla visita su repositorio:\n"
+        "https://github.com/oliver-almaraz/Texto_a_Braille\n"
+        "oliver.almaraz@gmail.com\n\n"
+    );
 
     #ifdef WINDOWS
-		system("pause");
-	#endif
+        system("pause");
+    #endif
 }
